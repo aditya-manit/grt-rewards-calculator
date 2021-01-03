@@ -1,7 +1,7 @@
 // Listen for submit
-
+/*
 document.getElementById("loan-form").addEventListener("submit", computeResults);
-
+const button = document.querySelector('.button');
 function computeResults(e) {
   // UI
 
@@ -37,5 +37,65 @@ function computeResults(e) {
 
   document.getElementById("totalPayment").innerHTML = "$" + totalPayment;
 
-  e.preventDefault();
 }
+
+
+button.addEventListener('click', (e) => {
+	console.log('Calculating...');
+	// show loader
+	button.classList.add('loading');
+	
+	// set timeout
+	setTimeout(computeResults, 2000);
+	
+	// prevent page from reloading on submit
+	e.preventDefault();
+}); */
+
+
+//new code
+
+const simpleInterest = document.querySelector('loan-form');
+const button = document.querySelector('.button');
+
+function calculateResults(e) {
+	// ui elements
+	const principal = document.getElementById("amount");
+	const rate = document.getElementById("interest");
+	const time = document.getElementById("years");
+	// formula variables
+	const p = parseFloat(principal.value);
+	const r = parseFloat(rate.value);
+	const t = parseFloat(time.value);
+	
+	// calculate total interest
+	const interest = (p*t*r/100);
+	// calculate monthly payment
+	const payment = ((interest + p) / (t * 12)).toFixed(2);
+	// calculate total amount paid
+	const total = (interest + p).toFixed(2);
+	
+	
+  document.getElementById("monthlyPayment").innerHTML = "$" + payment;
+
+  document.getElementById("totalInterest").innerHTML = "%" + interest;
+
+  document.getElementById("totalPayment").innerHTML = "$" + total;
+		// hide loader
+		button.classList.remove('loading');
+	
+	
+}
+
+button.addEventListener('click', (e) => {
+	console.log('Calculating...');
+	// show loader
+	button.classList.add('loading');
+	
+	// set timeout
+	setTimeout(calculateResults, 2000);
+	
+	// prevent page from reloading on submit
+	e.preventDefault();
+});
+
